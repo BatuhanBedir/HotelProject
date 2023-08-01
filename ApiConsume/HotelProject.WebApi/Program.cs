@@ -1,6 +1,13 @@
+using HotelProject.DataAccessLayer.Extensions;
+using HotelProject.BusinessLayer.Extensions;
+using HotelProject.DataAccessLayer.Concrete;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddDbContext<Context>();
+builder.Services
+        .AddEFCoreServices(builder.Configuration)
+        .AddBusinessServices();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
