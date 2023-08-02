@@ -27,7 +27,7 @@ public class StaffController : ControllerBase
         _staffService.TInsert(staff);
         return Ok();
     }
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public IActionResult DeleteStaff(int id)
     {
         var staff = _staffService.TGetById(id);

@@ -27,7 +27,7 @@ public class ServiceController : ControllerBase
         _serviceService.TInsert(service);
         return Ok();
     }
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public IActionResult DeleteService(int id)
     {
         var service = _serviceService.TGetById(id);
