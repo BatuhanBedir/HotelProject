@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IServiceService, ServiceManager>();
         services.AddScoped<ISubscribeService, SubscribeManager>();
         services.AddScoped<ITestimonialService, TestimonialManager>();
+        services.AddScoped<IAboutService, AboutManager>();
 
         return services;
     }
