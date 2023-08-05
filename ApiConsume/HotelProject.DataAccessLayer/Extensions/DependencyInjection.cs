@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IStaffDal, EfStaffDal>();
         services.AddScoped<IServiceDal, EfServiceDal>();
         services.AddScoped<IAboutDal, EfAboutDal>();
+        services.AddScoped<IBookingDal, EfBookingDal>();
 
         return services;
     }
