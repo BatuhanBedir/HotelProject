@@ -27,7 +27,7 @@ public class RoomController : ControllerBase
         _roomService.TInsert(room);
         return Ok();
     }
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public IActionResult DeleteRoom(int id)
     {
         var room =_roomService.TGetById(id);

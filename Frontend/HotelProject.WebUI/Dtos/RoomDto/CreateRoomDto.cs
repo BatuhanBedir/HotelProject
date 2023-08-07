@@ -1,8 +1,6 @@
-﻿using HotelProject.EntityLayer.Abstract;
+﻿namespace HotelProject.WebUI.Dtos.RoomDto;
 
-namespace HotelProject.EntityLayer.Concrete;
-
-public class Room : BaseEntity
+public class CreateRoomDto
 {
     public string CoverImage { get; set; }
     public string Number { get; set; }
@@ -10,6 +8,6 @@ public class Room : BaseEntity
     public string Title { get; set; }
     public string BedCount { get; set; }
     public string BathCount { get; set; }
-    public string? Wifi { get; set; }
+    public string Wifi { get; set; }
     public string Description { get; set; }
 }

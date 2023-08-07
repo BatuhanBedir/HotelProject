@@ -4,51 +4,53 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.BusinessLayer.Services;
 
-public class RoomManager : IRoomService
+public class GuestManager : IGuestService
 {
-    private readonly IRoomDal _roomDal;
+    private readonly IGuestDal _guestDal;
     private readonly IAboutDal _aboutDal;
 
-    public RoomManager(IRoomDal roomDal, IAboutDal aboutDal)
+
+    public GuestManager(IGuestDal guestDal, IAboutDal aboutDal)
     {
-        _roomDal = roomDal;
+        _guestDal = guestDal;
         _aboutDal = aboutDal;
     }
 
-    public void TDelete(Room t)
+    public void TDelete(Guest t)
     {
-        _roomDal.Delete(t);
+        _guestDal.Delete(t);
         var a = _aboutDal.GetList();
         foreach (var item in a)
         {
-            item.RoomCount--;
+            item.StaffCount--;
             _aboutDal.Update(item);
         }
     }
 
-    public Room TGetById(int id)
+    public Guest TGetById(int id)
     {
-        return _roomDal.GetById(id);
+        return _guestDal.GetById(id);
     }
 
-    public List<Room> TGetList()
+    public List<Guest> TGetList()
     {
-        return _roomDal.GetList();
+        return _guestDal.GetList();
     }
 
-    public void TInsert(Room t)
+    public void TInsert(Guest t)
     {
-        _roomDal.Insert(t);
+        _guestDal.Insert(t);
         List<About>? a = _aboutDal.GetList();
+
         foreach (var item in a)
         {
-            item.RoomCount++;
+            item.StaffCount++;
             _aboutDal.Update(item);
         }
     }
 
-    public void TUpdate(Room t)
+    public void TUpdate(Guest t)
     {
-        _roomDal.Update(t);
+        _guestDal.Update(t);
     }
 }

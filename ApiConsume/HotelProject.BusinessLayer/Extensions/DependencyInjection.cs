@@ -15,6 +15,8 @@ public static class DependencyInjection
         services.AddScoped<ITestimonialService, TestimonialManager>();
         services.AddScoped<IAboutService, AboutManager>();
         services.AddScoped<IBookingService, BookingManager>();
+        services.AddScoped<IContactService, ContactManager>();
+        services.AddScoped<IGuestService, GuestManager>();
 
         return services;
     }
