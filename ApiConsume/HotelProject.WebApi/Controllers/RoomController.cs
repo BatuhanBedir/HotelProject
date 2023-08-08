@@ -43,7 +43,7 @@ public class RoomController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetRoom(int id)
     {
-        var Room = _roomService.TGetById(id);
-        return Ok(Room);
+        var room = _roomService.TGetById(id);
+        return Ok(room);
     }
 }
