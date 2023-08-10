@@ -9,4 +9,6 @@ public class Contact : BaseEntity
     public string Subject { get; set; }
     public string Message { get; set; }
     public DateTime Date { get; set; }
+    public int CategoryId { get; set; }
+    public Category? Category { get; set; }
 }

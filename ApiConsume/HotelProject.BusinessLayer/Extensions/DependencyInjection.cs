@@ -18,6 +18,9 @@ public static class DependencyInjection
         services.AddScoped<IContactService, ContactManager>();
         services.AddScoped<IGuestService, GuestManager>();
         services.AddScoped<ISendMessageService, SendMessageManager>();
+        services.AddScoped<ICategoryService, CategoryManager>();
+        services.AddScoped<IWorkLocationService, WorkLocationManager>();
+        services.AddScoped<IAppUserService, AppUserManager>();
 
         return services;
     }

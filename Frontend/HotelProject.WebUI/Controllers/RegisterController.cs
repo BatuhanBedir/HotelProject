@@ -32,6 +32,8 @@ public class RegisterController : Controller
             Email = createNewUserDto.Mail,
             UserName = createNewUserDto.Username,
             City = createNewUserDto.City,
+            WorkLocationId = 1,
+            ImageUrl="test"
         };
         var result = await _userManager.CreateAsync(appUser, createNewUserDto.Password);
         if (result.Succeeded)

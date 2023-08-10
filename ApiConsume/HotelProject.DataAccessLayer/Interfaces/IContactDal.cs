@@ -5,4 +5,5 @@ namespace HotelProject.DataAccessLayer.Interfaces;
 
 public interface IContactDal : IGenericDal<Contact>
 {
+    public int GetContactCount();
 }

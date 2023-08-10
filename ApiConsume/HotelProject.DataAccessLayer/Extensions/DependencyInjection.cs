@@ -1,5 +1,6 @@
 ﻿using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
+using HotelProject.DataAccessLayer.Interfaces.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +20,9 @@ public static class DependencyInjection
         services.AddScoped<IContactDal, EfContactDal>();
         services.AddScoped<IGuestDal, EfGuestDal>();
         services.AddScoped<ISendMessageDal, EfSendMessageDal>();
+        services.AddScoped<ICategoryDal, EfCategoryDal>();
+        services.AddScoped<IWorkLocationDal, EfWorkLocationDal>();
+        services.AddScoped<IAppUserDal, EfAppUserDal>();
 
         return services;
     }

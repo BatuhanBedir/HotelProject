@@ -20,9 +20,13 @@ public class AdminContactController : Controller
     {
         var client = _httpClientFactory.CreateClient();
         var responseMessage = await client.GetAsync("http://localhost:1322/api/Contact");
+        var responseMessageCount = await client.GetAsync("http://localhost:1322/api/Contact/GetContactCount");
+        var responseSendMessageCount = await client.GetAsync("http://localhost:1322/api/SendMessage/GetSendMessageCount");
         if (responseMessage.IsSuccessStatusCode)
         {
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
+            ViewBag.contactCount = await responseMessageCount.Content.ReadAsStringAsync();
+            ViewBag.sendMessageCount = await responseSendMessageCount.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<InboxContactDto>>(jsonData);
             return View(values);
         }

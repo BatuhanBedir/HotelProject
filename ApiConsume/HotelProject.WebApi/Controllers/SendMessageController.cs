@@ -47,4 +47,9 @@ public class SendMessageController : ControllerBase
         var values = _sendMessageService.TGetById(id);
         return Ok(values);
     }
+    [HttpGet("[action]")]
+    public IActionResult GetSendMessageCount()
+    {
+        return Ok(_sendMessageService.TGetSendMessageCount());
+    }
 }

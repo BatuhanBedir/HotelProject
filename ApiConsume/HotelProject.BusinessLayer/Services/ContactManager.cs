@@ -13,6 +13,11 @@ public class ContactManager : IContactService
         _contactDal = contactDal;
     }
 
+    public int TGetContactCount()
+    {
+        return _contactDal.GetContactCount();
+    }
+
     public void TDelete(Contact t)
     {
         _contactDal.Delete(t);

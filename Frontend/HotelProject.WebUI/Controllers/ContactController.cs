@@ -1,7 +1,10 @@
 ﻿using HotelProject.WebUI.Dtos.BookingDto;
+using HotelProject.WebUI.Dtos.CategoryDto;
 using HotelProject.WebUI.Dtos.ContactDto;
+using HotelProject.WebUI.Dtos.RoomDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
@@ -17,8 +20,19 @@ public class ContactController : Controller
     {
         _httpClientFactory = httpClientFactory;
     }
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+        var client = _httpClientFactory.CreateClient();
+        var responseMessage = await client.GetAsync("http://localhost:1322/api/Category");
+
+        var jsonData = await responseMessage.Content.ReadAsStringAsync();
+        var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
+        ViewBag.categories = (from x in values
+                              select new SelectListItem
+                              {
+                                  Text = x.Name,
+                                  Value = x.Id.ToString()
+                              }).ToList();
         return View();
     }
     [HttpGet]
@@ -30,11 +44,11 @@ public class ContactController : Controller
     [HttpPost]
     public async Task<IActionResult> SendMessage(CreateContactDto createContactDto)
     {
-        createContactDto.Date = DateTime.Parse(DateTime.Now.ToString());
+        createContactDto.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
         var client = _httpClientFactory.CreateClient();
         var jsonData = JsonConvert.SerializeObject(createContactDto);
         StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        var a = await client.PostAsync("http://localhost:1322/api/Contact", stringContent);
+        await client.PostAsync("http://localhost:1322/api/Contact", stringContent);
         return RedirectToAction("Index", "Default");
     }
 }

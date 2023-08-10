@@ -34,4 +34,9 @@ public class ContactController : ControllerBase
         var contact = _contactService.TGetById(id);
         return Ok(contact);
     }
+    [HttpGet("[action]")]
+    public IActionResult GetContactCount()
+    {
+        return Ok(_contactService.TGetContactCount());
+    }
 }
