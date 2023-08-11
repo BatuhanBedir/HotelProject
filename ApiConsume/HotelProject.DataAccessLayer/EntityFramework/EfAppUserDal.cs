@@ -14,7 +14,7 @@ public class EfAppUserDal : IAppUserDal
         _context = context;
     }
 
-    public List<AppUser> TGetList()
+    public List<AppUser> GetList()
     {
         return _context.Users.ToList();
     }
@@ -22,5 +22,7 @@ public class EfAppUserDal : IAppUserDal
     public List<AppUser> UserListWithWorkLocation()
     {
         return _context.Users.Include(x => x.WorkLocation).ToList();
+        
     }
+
 }

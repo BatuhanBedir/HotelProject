@@ -53,4 +53,9 @@ public class BookingController : ControllerBase
         var booking = _bookingService.TGetById(id);
         return Ok(booking);
     }
+    [HttpGet("[action]")]
+    public IActionResult Last6Bookings()
+    {
+        return Ok(_bookingService.TLast6Bookings());
+    }
 }

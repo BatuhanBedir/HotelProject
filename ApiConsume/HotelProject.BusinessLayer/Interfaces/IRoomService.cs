@@ -5,4 +5,5 @@ namespace HotelProject.BusinessLayer.Interfaces;
 
 public interface IRoomService : IGenericService<Room>
 {
+    int TRoomCount();
 }

@@ -18,4 +18,10 @@ public class EfBookingDal : GenericRepository<Booking>, IBookingDal
         value.Status = "Onaylandı";
         context.SaveChanges();
     }
+
+    public List<Booking> Last6Booking()
+    {
+        var context=new Context();
+        return context.Bookings.OrderByDescending(x=>x.Id).Take(6).ToList();
+    }
 }

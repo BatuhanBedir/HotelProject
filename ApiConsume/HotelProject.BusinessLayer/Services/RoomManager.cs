@@ -47,6 +47,11 @@ public class RoomManager : IRoomService
         }
     }
 
+    public int TRoomCount()
+    {
+        return _roomDal.GetList().Count();
+    }
+
     public void TUpdate(Room t)
     {
         _roomDal.Update(t);

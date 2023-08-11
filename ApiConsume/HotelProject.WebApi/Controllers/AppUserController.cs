@@ -1,6 +1,9 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.Concrete;
+using HotelProject.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelProject.WebApi.Controllers;
 
@@ -18,8 +21,9 @@ public class AppUserController : ControllerBase
     [HttpGet("[action]")]
     public IActionResult UserListWorkLocation()
     {
-        var users = _appUserService.TUserListWithWorkLocation();
-        return Ok(users);
+        
+        var values = _appUserService.TUserListWorkLocation();
+        return Ok(values);
     }
     [HttpGet]
     public IActionResult AppUserList()

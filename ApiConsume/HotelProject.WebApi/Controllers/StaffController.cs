@@ -42,8 +42,13 @@ public class StaffController : ControllerBase
     }
     [HttpGet("{id}")]
     public IActionResult GetStaff(int id)
-    { 
+    {
         var values = _staffService.TGetById(id);
         return Ok(values);
+    }
+    [HttpGet("[action]")]
+    public IActionResult Last4Staff()
+    {
+        return Ok(_staffService.TLast4Staff());
     }
 }

@@ -5,4 +5,5 @@ namespace HotelProject.DataAccessLayer.Interfaces;
 
 public interface IStaffDal : IGenericDal<Staff>
 {
+    List<Staff> Last4Staff();
 }
