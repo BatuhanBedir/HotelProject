@@ -1,5 +1,6 @@
 ﻿using HotelProject.EntityLayer.Concrete;
 using HotelProject.WebUI.Dtos.LoginDto;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ namespace HotelProject.WebUI.Controllers;
 public class LoginController : Controller
 {
     private readonly SignInManager<AppUser> _signInManager;
+    
 
     public LoginController(SignInManager<AppUser> signInManager)
     {
@@ -33,5 +35,11 @@ public class LoginController : Controller
             }
         }
         return View();
+    }
+    public async Task<IActionResult> SignOut()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Default");
+
     }
 }
