@@ -5,6 +5,6 @@ namespace HotelProject.DataAccessLayer.Interfaces;
 
 public interface IBookingDal : IGenericDal<Booking>
 {
-    void BookingStatusChangeApproved(int id);
+    void BookingStatusChange(int id, string status);
     List<Booking> Last6Booking();
 }

@@ -12,9 +12,9 @@ public class BookingManager : IBookingService
     {
         _bookingDal = bookingDal;
     }
-    public void TBookingStatusChangeApproved(int id)
+    public void TBookingStatusChange(int id, string status)
     {
-        _bookingDal.BookingStatusChangeApproved(id);
+        _bookingDal.BookingStatusChange(id,status);
     }
 
     public void TDelete(Booking t)

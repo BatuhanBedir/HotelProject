@@ -5,7 +5,7 @@ namespace HotelProject.BusinessLayer.Interfaces;
 
 public interface IBookingService : IGenericService<Booking>
 {
-    void TBookingStatusChangeApproved(int id); 
+    void TBookingStatusChange(int id,string status); 
     int TGetBookingCount();
     List<Booking> TLast6Bookings();
 }

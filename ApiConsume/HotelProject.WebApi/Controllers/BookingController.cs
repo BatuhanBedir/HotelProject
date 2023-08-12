@@ -35,16 +35,10 @@ public class BookingController : ControllerBase
         _bookingService.TDelete(booking);
         return Ok();
     }
-    [HttpPut]
+    [HttpPut("[action]")]
     public IActionResult UpdateBooking(Booking booking)
     {
         _bookingService.TUpdate(booking);
-        return Ok();
-    }
-    [HttpPut("[action]")]
-    public IActionResult BookingAproved(int id)
-    {
-        _bookingService.TBookingStatusChangeApproved(id);
         return Ok();
     }
     [HttpGet("{id}")]
@@ -58,4 +52,12 @@ public class BookingController : ControllerBase
     {
         return Ok(_bookingService.TLast6Bookings());
     }
+
+    [HttpPut("[action]")]
+    public IActionResult BookingStatus([FromQuery] int id, [FromQuery] string status)
+    {
+        _bookingService.TBookingStatusChange(id, status);
+        return Ok();
+    }
+
 }

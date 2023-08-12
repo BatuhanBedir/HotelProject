@@ -11,11 +11,11 @@ public class EfBookingDal : GenericRepository<Booking>, IBookingDal
     public EfBookingDal(Context context) : base(context)
     {
     }
-    public void BookingStatusChangeApproved(int id)
+    public void BookingStatusChange(int id, string status)
     {
         var context = new Context();
         var value = context.Bookings.FirstOrDefault(x=>x.Id==id);
-        value.Status = "Onaylandı";
+        value.Status = status;
         context.SaveChanges();
     }
 
