@@ -47,14 +47,23 @@ public class RoleAssignController : Controller
     {
         var userId = (int)TempData["userId"];
         var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+        var userRoles = await _userManager.GetRolesAsync(user);
+
+        var rolesToRemove = userRoles.Except(roleAssignVms.Where(item => item.Exist).Select(item => item.Name)).ToList();
+
+        foreach (var role in rolesToRemove)
+        {
+            await _userManager.RemoveFromRoleAsync(user, role);
+        }
+
         foreach (var item in roleAssignVms)
         {
             if (item.Exist)
+            {
                 await _userManager.AddToRoleAsync(user, item.Name);
-            else
-                await _userManager.RemoveFromRoleAsync(user, item.Name);
-            
+            }
         }
+        userRoles = await _userManager.GetRolesAsync(user);
 
         return RedirectToAction("Index");
     }
