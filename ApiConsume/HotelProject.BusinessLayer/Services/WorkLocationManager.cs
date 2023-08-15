@@ -1,39 +1,45 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.BusinessLayer.Services;
 public class WorkLocationManager : IWorkLocationService
 {
-    private readonly IWorkLocationDal _workLocationDal;
+    private readonly IWorkLocationRepository _workLocationRepository;
 
-    public WorkLocationManager(IWorkLocationDal workLocationDal)
+    public WorkLocationManager(IWorkLocationRepository workLocationRepository)
     {
-        _workLocationDal = workLocationDal;
+        _workLocationRepository = workLocationRepository;
     }
 
-    public void TDelete(WorkLocation t)
+    public async Task AddAsync(WorkLocation t)
     {
-        _workLocationDal.Delete(t);
+        await _workLocationRepository.AddAsync(t);
+        await _workLocationRepository.SaveChangesAsync();
     }
 
-    public WorkLocation TGetById(int id)
+    public async Task DeleteAsync(WorkLocation t)
     {
-        return _workLocationDal.GetById(id);
+        await _workLocationRepository.DeleteAsync(t);
+        await _workLocationRepository.SaveChangesAsync();
+
     }
 
-    public List<WorkLocation> TGetList()
+    public async Task<List<WorkLocation>> GetAllAsync()
     {
-        return _workLocationDal.GetList();
+        return await _workLocationRepository.GetAllAsync();
     }
 
-    public void TInsert(WorkLocation t)
+    public async Task<WorkLocation> GetByIdAsync(int id)
     {
-        _workLocationDal.Insert(t);
+        return await _workLocationRepository.GetByIdAsync(id);
     }
 
-    public void TUpdate(WorkLocation t)
+    public async Task UpdateAsync(WorkLocation t)
     {
-        _workLocationDal.Update(t);
+        await _workLocationRepository.UpdateAsync(t);
+        await _workLocationRepository.SaveChangesAsync();
     }
+
 }

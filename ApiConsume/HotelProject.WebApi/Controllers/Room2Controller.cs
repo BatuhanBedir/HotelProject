@@ -19,32 +19,32 @@ public class Room2Controller : ControllerBase
         _mapper = mapper;
     }
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var value =  _roomService.TGetList();
+        var value =  await _roomService.GetAllAsync();
         return Ok(value);
     }
 
     [HttpPost]
-    public IActionResult AddRoom(RoomAddDto roomAddDto)
+    public async Task<IActionResult> AddRoom(RoomAddDto roomAddDto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest();
         }
         var value = _mapper.Map<Room>(roomAddDto);
-        _roomService.TInsert(value);
+        await _roomService.AddAsync(value);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateRoom(UpdateRoomDto updateRoomDto)
+    public async Task<IActionResult> UpdateRoom(UpdateRoomDto updateRoomDto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest();
         }
         var values = _mapper.Map<Room>(updateRoomDto);
-        _roomService.TUpdate(values);
+        await _roomService.UpdateAsync(values);
         return Ok("Başarıyla Güncellendi");
     }
 }

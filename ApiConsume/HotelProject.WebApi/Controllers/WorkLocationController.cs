@@ -17,34 +17,34 @@ public class WorkLocationController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult WorkLocationList()
+    public async Task<IActionResult> WorkLocationList()
     {
-        var workLocation = _workLocationService.TGetList();
+        var workLocation =await _workLocationService.GetAllAsync();
         return Ok(workLocation);
     }
     [HttpPost]
-    public IActionResult AddWorkLocation(WorkLocation workLocation)
+    public async Task<IActionResult> AddWorkLocation(WorkLocation workLocation)
     {
-        _workLocationService.TInsert(workLocation);
+        await _workLocationService.AddAsync(workLocation);
         return Ok();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteWorkLocation(int id)
+    public async Task<IActionResult> DeleteWorkLocation(int id)
     {
-        var workLocation = _workLocationService.TGetById(id);
-        _workLocationService.TDelete(workLocation);
+        var workLocation = await _workLocationService.GetByIdAsync(id);
+        await _workLocationService.DeleteAsync(workLocation);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateWorkLocation(WorkLocation workLocation)
+    public async Task<IActionResult> UpdateWorkLocation(WorkLocation workLocation)
     {
-        _workLocationService.TUpdate(workLocation);
+        await _workLocationService.UpdateAsync(workLocation);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetWorkLocation(int id)
+    public async Task<IActionResult> GetWorkLocation(int id)
     {
-        var values = _workLocationService.TGetById(id);
+        var values = await _workLocationService.GetByIdAsync(id);
         return Ok(values);
     }
 }

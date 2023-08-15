@@ -1,4 +1,5 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
@@ -6,35 +7,39 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class SubscribeManager : ISubscribeService
 {
-    private readonly ISubscribeDal _subscribeDal;
+    private readonly ISubscribeRepository _subscribeRepository;
 
-    public SubscribeManager(ISubscribeDal subscribeDal)
+    public SubscribeManager(ISubscribeRepository subscribeRepository)
     {
-        _subscribeDal = subscribeDal;
+        _subscribeRepository = subscribeRepository;
+    }
+    public async Task AddAsync(Subscribe t)
+    {
+        await _subscribeRepository.AddAsync(t);
+        await _subscribeRepository.SaveChangesAsync();
     }
 
-    public void TDelete(Subscribe t)
+    public async Task DeleteAsync(Subscribe t)
     {
-        _subscribeDal.Delete(t);
+        await _subscribeRepository.DeleteAsync(t);
+        await _subscribeRepository.SaveChangesAsync();
+
     }
 
-    public Subscribe TGetById(int id)
+    public async Task<List<Subscribe>> GetAllAsync()
     {
-        return _subscribeDal.GetById(id);
+        return await _subscribeRepository.GetAllAsync();
     }
 
-    public List<Subscribe> TGetList()
+    public async Task<Subscribe> GetByIdAsync(int id)
     {
-        return _subscribeDal.GetList();
+        return await _subscribeRepository.GetByIdAsync(id);
     }
 
-    public void TInsert(Subscribe t)
+    public async Task UpdateAsync(Subscribe t)
     {
-        _subscribeDal.Insert(t);
+        await _subscribeRepository.UpdateAsync(t);
+        await _subscribeRepository.SaveChangesAsync();
     }
 
-    public void TUpdate(Subscribe t)
-    {
-        _subscribeDal.Update(t);    
-    }
 }

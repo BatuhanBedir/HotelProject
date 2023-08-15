@@ -1,4 +1,5 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
@@ -6,40 +7,45 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class SendMessageManager : ISendMessageService
 {
-    private readonly ISendMessageDal _sendMessageDal;
+    private readonly ISendMessageRepository _sendMessageRepository;
 
-    public SendMessageManager(ISendMessageDal sendMessageDal)
+    public SendMessageManager(ISendMessageRepository sendMessageRepository)
     {
-        _sendMessageDal = sendMessageDal;
+        _sendMessageRepository = sendMessageRepository;
     }
 
-    public void TDelete(SendMessage t)
+    public async Task AddAsync(SendMessage t)
     {
-        _sendMessageDal.Delete(t);
+        await _sendMessageRepository.AddAsync(t);
+        await _sendMessageRepository.SaveChangesAsync();
     }
 
-    public SendMessage TGetById(int id)
+    public async Task DeleteAsync(SendMessage t)
     {
-        return _sendMessageDal.GetById(id);
+        await _sendMessageRepository.DeleteAsync(t);
+        await _sendMessageRepository.SaveChangesAsync();
+
     }
 
-    public List<SendMessage> TGetList()
+    public async Task<List<SendMessage>> GetAllAsync()
     {
-        return _sendMessageDal.GetList();
+        return await _sendMessageRepository.GetAllAsync();
     }
 
-    public int TGetSendMessageCount()
+    public async Task<SendMessage> GetByIdAsync(int id)
     {
-        return _sendMessageDal.GetSendMessageCount();
+        return await _sendMessageRepository.GetByIdAsync(id);
     }
 
-    public void TInsert(SendMessage t)
+    public async Task UpdateAsync(SendMessage t)
     {
-        _sendMessageDal.Insert(t);
+        await _sendMessageRepository.UpdateAsync(t);
+        await _sendMessageRepository.SaveChangesAsync();
     }
 
-    public void TUpdate(SendMessage t)
+    public async Task<int> GetSendMessageCountAsync()
     {
-        _sendMessageDal.Update(t);
+        var sendMessages = await _sendMessageRepository.GetAllAsync();
+        return sendMessages.Count();
     }
 }

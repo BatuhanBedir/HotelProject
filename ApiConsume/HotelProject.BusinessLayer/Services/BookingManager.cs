@@ -6,49 +6,56 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class BookingManager : IBookingService
 {
-    private readonly IBookingDal _bookingDal;
+    private readonly IBookingRepository _bookingRepository;
 
-    public BookingManager(IBookingDal bookingDal)
+    public BookingManager(IBookingRepository bookingRepository)
     {
-        _bookingDal = bookingDal;
-    }
-    public void TBookingStatusChange(int id, string status)
-    {
-        _bookingDal.BookingStatusChange(id,status);
+        _bookingRepository = bookingRepository;
     }
 
-    public void TDelete(Booking t)
+    public async Task AddAsync(Booking t)
     {
-        _bookingDal.Delete(t);
+        await _bookingRepository.AddAsync(t);
+        await _bookingRepository.SaveChangesAsync();
     }
 
-    public int TGetBookingCount()
+    public async Task DeleteAsync(Booking t)
     {
-        return _bookingDal.GetList().Count();
+        await _bookingRepository.DeleteAsync(t);
+        await _bookingRepository.SaveChangesAsync();
     }
 
-    public Booking TGetById(int id)
+    public async Task<List<Booking>> GetAllAsync()
     {
-        return _bookingDal.GetById(id);
+        return await _bookingRepository.GetAllAsync();
     }
 
-    public List<Booking> TGetList()
+    public async Task<int> GetBookingCountAsync()
     {
-        return _bookingDal.GetList();
+        var bookings = await _bookingRepository.GetAllAsync();
+        return bookings.Count();
     }
 
-    public void TInsert(Booking t)
+    public async Task<Booking> GetByIdAsync(int id)
     {
-        _bookingDal.Insert(t);
+        return await _bookingRepository.GetByIdAsync(id);
     }
 
-    public List<Booking> TLast6Bookings()
+    public async Task<List<Booking>> Last6BookingsAsync()
     {
-        return _bookingDal.Last6Booking();
+        return await _bookingRepository.Last6BookingAsync();
     }
 
-    public void TUpdate(Booking t)
+    public async Task BookingStatusChangeAsync(int id, string status)
     {
-        _bookingDal.Update(t);
+        await _bookingRepository.BookingStatusChangeAsync(id, status);
+        await _bookingRepository.SaveChangesAsync();
     }
+
+    public async Task UpdateAsync(Booking t)
+    {
+        await _bookingRepository.UpdateAsync(t);
+        await _bookingRepository.SaveChangesAsync();
+    }
+
 }

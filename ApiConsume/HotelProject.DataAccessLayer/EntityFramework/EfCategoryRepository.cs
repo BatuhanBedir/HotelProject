@@ -5,9 +5,9 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.EntityFramework;
 
-public class EfServiceDal : GenericRepository<Service>,IServiceDal
+public class EfCategoryRepository : GenericRepository<Category>, ICategoryRepository
 {
-    public EfServiceDal(Context context) : base(context)
+    public EfCategoryRepository(Context context) : base(context)
     {
     }
 }

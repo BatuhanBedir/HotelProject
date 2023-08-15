@@ -1,8 +1,8 @@
 ﻿using HotelProject.EntityLayer.Abstract;
 
-namespace HotelProject.BusinessLayer.Interfaces.Generic;
+namespace HotelProject.DataAccessLayer.Interfaces.Generic;
 
-public interface IGenericService<T> where T : class
+public interface IGenericRepository<T> : IUnitOfWork where T : class
 {
     Task AddAsync(T t);
     Task DeleteAsync(T t);

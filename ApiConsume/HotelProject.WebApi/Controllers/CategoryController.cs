@@ -17,34 +17,34 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult CategoryList()
+    public async Task<IActionResult> CategoryList()
     {
-        var categories = _categoryService.TGetList();
+        var categories = await _categoryService.GetAllAsync();
         return Ok(categories);
     }
     [HttpPost]
-    public IActionResult AddCategory(Category category)
+    public async Task<IActionResult> AddCategory(Category category)
     {
-        _categoryService.TInsert(category);
+        await _categoryService.AddAsync(category);
         return Ok();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteCategory(int id)
+    public async Task<IActionResult> DeleteCategory(int id)
     {
-        var category = _categoryService.TGetById(id);
-        _categoryService.TDelete(category);
+        var category = await _categoryService.GetByIdAsync(id);
+        await _categoryService.DeleteAsync(category);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateCategory(Category category)
+    public async Task<IActionResult> UpdateCategory(Category category)
     {
-        _categoryService.TUpdate(category);
+        await _categoryService.UpdateAsync(category);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetCategory(int id)
+    public async Task<IActionResult> GetCategory(int id)
     {
-        var values = _categoryService.TGetById(id);
+        var values =await _categoryService.GetByIdAsync(id);
         return Ok(values);
     }
 }

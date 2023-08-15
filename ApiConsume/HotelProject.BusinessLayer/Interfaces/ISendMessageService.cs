@@ -5,6 +5,6 @@ namespace HotelProject.BusinessLayer.Interfaces;
 
 public interface ISendMessageService : IGenericService<SendMessage>
 {
-    public int TGetSendMessageCount();
+    public Task<int> GetSendMessageCountAsync();
 
 }

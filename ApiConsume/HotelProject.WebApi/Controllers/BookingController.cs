@@ -17,46 +17,46 @@ public class BookingController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult BookingList()
+    public async Task<IActionResult> BookingList()
     {
-        var bookings = _bookingService.TGetList();
+        var bookings = await _bookingService.GetAllAsync();
         return Ok(bookings);
     }
     [HttpPost]
-    public IActionResult AddBooking(Booking booking)
+    public async Task<IActionResult> AddBooking(Booking booking)
     {
-        _bookingService.TInsert(booking);
+        await _bookingService.AddAsync(booking);
         return Ok();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteBooking(int id)
+    public async Task<IActionResult> DeleteBooking(int id)
     {
-        var booking = _bookingService.TGetById(id);
-        _bookingService.TDelete(booking);
+        var booking = await _bookingService.GetByIdAsync(id);
+        await _bookingService.DeleteAsync(booking);
         return Ok();
     }
     [HttpPut("[action]")]
-    public IActionResult UpdateBooking(Booking booking)
+    public async Task<IActionResult> UpdateBooking(Booking booking)
     {
-        _bookingService.TUpdate(booking);
+        await _bookingService.UpdateAsync(booking);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetBooking(int id)
+    public async Task<IActionResult> GetBooking(int id)
     {
-        var booking = _bookingService.TGetById(id);
+        var booking = await _bookingService.GetByIdAsync(id);
         return Ok(booking);
     }
     [HttpGet("[action]")]
-    public IActionResult Last6Bookings()
+    public async Task<IActionResult> Last6Bookings()
     {
-        return Ok(_bookingService.TLast6Bookings());
+        return Ok(await _bookingService.Last6BookingsAsync());
     }
 
     [HttpPut("[action]")]
-    public IActionResult BookingStatus([FromQuery] int id, [FromQuery] string status)
+    public async Task<IActionResult> BookingStatus([FromQuery] int id, [FromQuery] string status)
     {
-        _bookingService.TBookingStatusChange(id, status);
+        await _bookingService.BookingStatusChangeAsync(id, status);
         return Ok();
     }
 

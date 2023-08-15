@@ -5,9 +5,9 @@ using HotelProject.DataAccessLayer.EntityFramework.Generic;
 
 namespace HotelProject.DataAccessLayer.EntityFramework;
 
-public class EfRoomDal : GenericRepository<Room>, IRoomDal
+public class EfRoomRepository : GenericRepository<Room>, IRoomRepository
 {
-    public EfRoomDal(Context context) : base(context)
+    public EfRoomRepository(Context context) : base(context)
     {
     }
 }

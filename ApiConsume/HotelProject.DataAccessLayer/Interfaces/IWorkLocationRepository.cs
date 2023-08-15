@@ -2,7 +2,6 @@
 using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.Interfaces;
-
-public interface IAboutDal : IGenericDal<About>
+public interface IWorkLocationRepository : IGenericRepository<WorkLocation>
 {
 }

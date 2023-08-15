@@ -1,43 +1,47 @@
 ﻿using HotelProject.DataAccessLayer.Concrete;
 using HotelProject.DataAccessLayer.Interfaces.Generic;
+using HotelProject.DataAccessLayer.Migrations;
 using HotelProject.EntityLayer.Abstract;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelProject.DataAccessLayer.EntityFramework.Generic;
 
-public class GenericRepository<T> : IGenericDal<T> where T : BaseEntity
+public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
-    private readonly Context _context;
-
+    protected readonly Context _context;
+    protected readonly DbSet<T> _table;
     public GenericRepository(Context context)
     {
         _context = context;
+        _table =_context.Set<T>();
     }
 
-    public void Delete(T t)
+    public async Task AddAsync(T t)
     {
-        _context.Remove(t);
-        _context.SaveChanges();
+        await _table.AddAsync(t);
     }
 
-    public T GetById(int id)
+    public Task DeleteAsync(T t)
     {
-        return _context.Set<T>().FirstOrDefault(item => item.Id == id);
+        return Task.FromResult(_table.Remove(t));
     }
 
-    public List<T> GetList()
+    public async Task<List<T>> GetAllAsync()
     {
-        return _context.Set<T>().ToList();
+        return await _table.ToListAsync();
+    }
+    public Task<T> GetByIdAsync(int id)
+    {
+        return _table.FirstOrDefaultAsync(x=>x.Id == id);
     }
 
-    public void Insert(T t)
+    public Task<int> SaveChangesAsync()
     {
-        _context.Add(t);
-        _context.SaveChanges();
+        return _context.SaveChangesAsync();
     }
 
-    public void Update(T t)
+    public async Task UpdateAsync(T t)
     {
-        _context.Update(t);
-        _context.SaveChanges();
+        await Task.FromResult(_table.Update(t));
     }
 }

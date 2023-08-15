@@ -1,4 +1,5 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
@@ -6,40 +7,45 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class ContactManager : IContactService
 {
-    private readonly IContactDal _contactDal;
+    private readonly IContactRepository _contactRepository;
 
-    public ContactManager(IContactDal contactDal)
+    public ContactManager(IContactRepository contactRepository)
     {
-        _contactDal = contactDal;
+        _contactRepository = contactRepository;
+    }
+    public async Task AddAsync(Contact t)
+    {
+        await _contactRepository.AddAsync(t);
+        await _contactRepository.SaveChangesAsync();
     }
 
-    public int TGetContactCount()
+    public async Task DeleteAsync(Contact t)
     {
-        return _contactDal.GetContactCount();
+        await _contactRepository.DeleteAsync(t);
+        await _contactRepository.SaveChangesAsync();
     }
 
-    public void TDelete(Contact t)
+    public async Task<List<Contact>> GetAllAsync()
     {
-        _contactDal.Delete(t);
+        return await _contactRepository.GetAllAsync();
     }
 
-    public Contact TGetById(int id)
+    public async Task<Contact> GetByIdAsync(int id)
     {
-        return _contactDal.GetById(id);
+        return await _contactRepository.GetByIdAsync(id);
     }
 
-    public List<Contact> TGetList()
+    public async Task<int> GetContactCountAsync()
     {
-        return _contactDal.GetList();
+        var contacts =await _contactRepository.GetAllAsync();
+        return contacts.Count();
     }
 
-    public void TInsert(Contact t)
+
+    public async Task UpdateAsync(Contact t)
     {
-        _contactDal.Insert(t);
+        await _contactRepository.UpdateAsync(t);
+        await _contactRepository.SaveChangesAsync();
     }
 
-    public void TUpdate(Contact t)
-    {
-        _contactDal.Update(t);
-    }
 }

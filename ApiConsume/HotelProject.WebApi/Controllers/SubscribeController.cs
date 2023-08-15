@@ -16,34 +16,34 @@ public class SubscribeController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult SubscribeList()
+    public async Task<IActionResult> SubscribeList()
     {
-        var subscribes = _subscribeService.TGetList();
+        var subscribes = await _subscribeService.GetAllAsync();
         return Ok(subscribes);
     }
     [HttpPost]
-    public IActionResult AddSubscribe(Subscribe subscribe)
+    public async Task<IActionResult> AddSubscribe(Subscribe subscribe)
     {
-        _subscribeService.TInsert(subscribe);
+        await _subscribeService.AddAsync(subscribe);
         return Ok();
     }
     [HttpDelete]
-    public IActionResult DeleteSubscribe(int id)
+    public async Task<IActionResult> DeleteSubscribe(int id)
     {
-        var subscribe = _subscribeService.TGetById(id);
-        _subscribeService.TDelete(subscribe);
+        var subscribe = await _subscribeService.GetByIdAsync(id);
+        await _subscribeService.DeleteAsync(subscribe);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateSubscribe(Subscribe subscribe)
+    public async Task<IActionResult> UpdateSubscribe(Subscribe subscribe)
     {
-        _subscribeService.TUpdate(subscribe);
+        await _subscribeService.UpdateAsync(subscribe);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetSubscribe(int id)
+    public async Task<IActionResult> GetSubscribe(int id)
     {
-        var values = _subscribeService.TGetById(id);
+        var values = await _subscribeService.GetByIdAsync(id);
         return Ok(values);
     }
 }

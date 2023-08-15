@@ -1,4 +1,5 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
@@ -6,51 +7,51 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class GuestManager : IGuestService
 {
-    private readonly IGuestDal _guestDal;
-    private readonly IAboutDal _aboutDal;
+    private readonly IGuestRepository _guestRepository;
+    private readonly IAboutRepository _aboutRepository;
 
 
-    public GuestManager(IGuestDal guestDal, IAboutDal aboutDal)
+    public GuestManager(IGuestRepository guestRepository, IAboutRepository aboutRepository)
     {
-        _guestDal = guestDal;
-        _aboutDal = aboutDal;
+        _guestRepository = guestRepository;
+        _aboutRepository = aboutRepository;
     }
-
-    public void TDelete(Guest t)
+    public async Task DeleteAsync(Guest t)
     {
-        _guestDal.Delete(t);
-        var a = _aboutDal.GetList();
-        foreach (var item in a)
+        await _guestRepository.DeleteAsync(t);
+        var about = await _aboutRepository.GetAllAsync();
+        foreach (var item in about)
         {
             item.StaffCount--;
-            _aboutDal.Update(item);
+            await _aboutRepository.UpdateAsync(item);
         }
+        await _guestRepository.SaveChangesAsync();
+
+    }
+    public async Task<Guest> GetByIdAsync(int id)
+    {
+        return await _guestRepository.GetByIdAsync(id);
     }
 
-    public Guest TGetById(int id)
+    public async Task<List<Guest>> GetAllAsync()
     {
-        return _guestDal.GetById(id);
+        return await _guestRepository.GetAllAsync();
     }
-
-    public List<Guest> TGetList()
+    public async Task AddAsync(Guest t)
     {
-        return _guestDal.GetList();
-    }
-
-    public void TInsert(Guest t)
-    {
-        _guestDal.Insert(t);
-        List<About>? a = _aboutDal.GetList();
-
-        foreach (var item in a)
+        await _guestRepository.AddAsync(t);
+        var about = await _aboutRepository.GetAllAsync();
+        foreach (var item in about)
         {
             item.StaffCount++;
-            _aboutDal.Update(item);
+            await _aboutRepository.UpdateAsync(item);
         }
+        await _guestRepository.SaveChangesAsync();
+    }
+    public async Task UpdateAsync(Guest t)
+    {
+        await _guestRepository.UpdateAsync(t);
+        await _guestRepository.SaveChangesAsync();
     }
 
-    public void TUpdate(Guest t)
-    {
-        _guestDal.Update(t);
-    }
 }

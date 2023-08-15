@@ -17,39 +17,39 @@ public class SendMessageController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult SendMessageList()
+    public async Task<IActionResult> SendMessageList()
     {
-        var SendMessages = _sendMessageService.TGetList();
+        var SendMessages = await _sendMessageService.GetAllAsync();
         return Ok(SendMessages);
     }
     [HttpPost]
-    public IActionResult AddSendMessage(SendMessage sendMessage)
+    public async Task<IActionResult> AddSendMessage(SendMessage sendMessage)
     {
-        _sendMessageService.TInsert(sendMessage);
+        await _sendMessageService.AddAsync(sendMessage);
         return Ok();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteSendMessage(int id)
+    public async Task<IActionResult> DeleteSendMessage(int id)
     {
-        var sendMessage = _sendMessageService.TGetById(id);
-        _sendMessageService.TDelete(sendMessage);
+        var sendMessage = await _sendMessageService.GetByIdAsync(id);
+        await _sendMessageService.DeleteAsync(sendMessage);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateSendMessage(SendMessage sendMessage)
+    public async Task<IActionResult> UpdateSendMessage(SendMessage sendMessage)
     {
-        _sendMessageService.TUpdate(sendMessage);
+        await _sendMessageService.UpdateAsync(sendMessage);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetSendMessage(int id)
+    public async Task<IActionResult> GetSendMessage(int id)
     {
-        var values = _sendMessageService.TGetById(id);
+        var values = await _sendMessageService.GetByIdAsync(id);
         return Ok(values);
     }
     [HttpGet("[action]")]
-    public IActionResult GetSendMessageCount()
+    public async Task<IActionResult> GetSendMessageCount()
     {
-        return Ok(_sendMessageService.TGetSendMessageCount());
+        return Ok(await _sendMessageService.GetSendMessageCountAsync());
     }
 }

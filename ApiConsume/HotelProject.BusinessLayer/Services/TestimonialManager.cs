@@ -1,4 +1,5 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
@@ -6,35 +7,39 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class TestimonialManager : ITestimonialService
 {
-    private readonly ITestimonialDal _testimonialDal;
+    private readonly ITestimonialRepository _testimonialRepository;
 
-    public TestimonialManager(ITestimonialDal testimonialDal)
+    public TestimonialManager(ITestimonialRepository testimonialRepository)
     {
-        _testimonialDal = testimonialDal;
+        _testimonialRepository = testimonialRepository;
+    }
+    public async Task AddAsync(Testimonial t)
+    {
+        await _testimonialRepository.AddAsync(t);
+        await _testimonialRepository.SaveChangesAsync();
     }
 
-    public void TDelete(Testimonial t)
+    public async Task DeleteAsync(Testimonial t)
     {
-        _testimonialDal.Delete(t);
+        await _testimonialRepository.DeleteAsync(t);
+        await _testimonialRepository.SaveChangesAsync();
+
     }
 
-    public Testimonial TGetById(int id)
+    public async Task<List<Testimonial>> GetAllAsync()
     {
-        return _testimonialDal.GetById(id);
+        return await _testimonialRepository.GetAllAsync();
     }
 
-    public List<Testimonial> TGetList()
+    public async Task<Testimonial> GetByIdAsync(int id)
     {
-        return _testimonialDal.GetList();
+        return await _testimonialRepository.GetByIdAsync(id);
     }
 
-    public void TInsert(Testimonial t)
+    public async Task UpdateAsync(Testimonial t)
     {
-        _testimonialDal.Insert(t);
+        await _testimonialRepository.UpdateAsync(t);
+        await _testimonialRepository.SaveChangesAsync();
     }
 
-    public void TUpdate(Testimonial t)
-    {
-        _testimonialDal.Update(t);
-    }
 }

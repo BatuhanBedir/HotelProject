@@ -3,7 +3,6 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.Interfaces;
 
-public interface ISendMessageDal : IGenericDal<SendMessage>
+public interface IServiceRepository : IGenericRepository<Service>
 {
-    public int GetSendMessageCount();
 }

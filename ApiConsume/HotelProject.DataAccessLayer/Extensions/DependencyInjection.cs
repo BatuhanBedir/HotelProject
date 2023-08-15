@@ -1,6 +1,5 @@
 ﻿using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
-using HotelProject.DataAccessLayer.Interfaces.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,19 +9,19 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddEFCoreServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IRoomDal, EfRoomDal>();
-        services.AddScoped<ITestimonialDal, EfTestimonialDal>();
-        services.AddScoped<ISubscribeDal, EfSubscribeDal>();
-        services.AddScoped<IStaffDal, EfStaffDal>();
-        services.AddScoped<IServiceDal, EfServiceDal>();
-        services.AddScoped<IAboutDal, EfAboutDal>();
-        services.AddScoped<IBookingDal, EfBookingDal>();
-        services.AddScoped<IContactDal, EfContactDal>();
-        services.AddScoped<IGuestDal, EfGuestDal>();
-        services.AddScoped<ISendMessageDal, EfSendMessageDal>();
-        services.AddScoped<ICategoryDal, EfCategoryDal>();
-        services.AddScoped<IWorkLocationDal, EfWorkLocationDal>();
-        services.AddScoped<IAppUserDal, EfAppUserDal>();
+        services.AddScoped<IRoomRepository, EfRoomRepository>();
+        services.AddScoped<ITestimonialRepository, EfTestimonialRepository>();
+        services.AddScoped<ISubscribeRepository, EfSubscribeRepository>();
+        services.AddScoped<IStaffRepository, EfStaffRepository>();
+        services.AddScoped<IServiceRepository, EfServiceRepository>();
+        services.AddScoped<IAboutRepository, EfAboutRepository>();
+        services.AddScoped<IBookingRepository, EfBookingRepository>();
+        services.AddScoped<IContactRepository, EfContactRepository>();
+        services.AddScoped<IGuestRepository, EfGuestRepository>();
+        services.AddScoped<ISendMessageRepository, EfSendMessageRepository>();
+        services.AddScoped<ICategoryRepository, EfCategoryRepository>();
+        services.AddScoped<IWorkLocationRepository, EfWorkLocationRepository>();
+        services.AddScoped<IAppUserRepository, EfAppUserRepository>();
 
         return services;
     }

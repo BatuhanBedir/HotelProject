@@ -16,27 +16,27 @@ public class ContactController : ControllerBase
         _contactService = contactService;
     }
     [HttpPost]
-    public IActionResult AddContact(Contact contact)
+    public async Task<IActionResult> AddContact(Contact contact)
     {
         contact.Date = Convert.ToDateTime(DateTime.Now.ToString());
-        _contactService.TInsert(contact);
+        await _contactService.AddAsync(contact);
         return Ok();
     }
     [HttpGet]
-    public IActionResult InboxListContact()
+    public async Task<IActionResult> InboxListContact()
     {
-        var contacts = _contactService.TGetList();
+        var contacts =await _contactService.GetAllAsync();
         return Ok(contacts);
     }
     [HttpGet("{id}")]
-    public IActionResult GetSendMessage(int id)
+    public async Task<IActionResult> GetSendMessage(int id)
     {
-        var contact = _contactService.TGetById(id);
+        var contact =await _contactService.GetByIdAsync(id);
         return Ok(contact);
     }
     [HttpGet("[action]")]
-    public IActionResult GetContactCount()
+    public async Task<IActionResult> GetContactCount()
     {
-        return Ok(_contactService.TGetContactCount());
+        return Ok(await _contactService.GetContactCountAsync());
     }
 }

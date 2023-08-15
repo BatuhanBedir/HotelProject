@@ -3,6 +3,6 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.Interfaces;
 
-public interface ISubscribeDal : IGenericDal<Subscribe>
+public interface IGuestRepository : IGenericRepository<Guest>
 {
 }

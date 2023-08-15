@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotelProject.DataAccessLayer.EntityFramework;
 
-public class EfAppUserDal : IAppUserDal
+public class EfAppUserRepository : IAppUserRepository
 {
     private readonly Context _context;
 
-    public EfAppUserDal(Context context)
+    public EfAppUserRepository(Context context)
     {
         _context = context;
     }

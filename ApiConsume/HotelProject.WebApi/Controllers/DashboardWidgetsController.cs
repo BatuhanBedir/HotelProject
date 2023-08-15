@@ -20,30 +20,30 @@ public class DashboardWidgetsController : ControllerBase
         _roomService = roomService;
     }
     [HttpGet("[action]")]
-    public IActionResult StaffCount()
+    public async Task<IActionResult> StaffCount()
     {
-        var value = _staffService.TGetStaffCount();
+        var value = await _staffService.GetStaffCountAsync();
         return Ok(value);
     }
 
     [HttpGet("[action]")]
-    public IActionResult BookingCount()
+    public async Task<IActionResult> BookingCount()
     {
-        var value = _bookingService.TGetBookingCount();
+        var value = await _bookingService.GetBookingCountAsync();
         return Ok(value);
     }
 
     [HttpGet("[action]")]
-    public IActionResult AppUserCount()
+    public async Task<IActionResult> AppUserCount()
     {
         var value = _appUserService.TAppUserCount();
         return Ok(value);
     }
 
     [HttpGet("[action]")]
-    public IActionResult RoomCount()
+    public async Task<IActionResult> RoomCount()
     {
-        var value = _roomService.TRoomCount();
+        var value = await _roomService.RoomCountAsync();
         return Ok(value);
     }
 }

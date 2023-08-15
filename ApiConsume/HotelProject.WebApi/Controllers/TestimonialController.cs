@@ -16,34 +16,34 @@ public class TestimonialController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult TestimonialList()
+    public async Task<IActionResult> TestimonialList()
     {
-        var testimonials = _testimonialService.TGetList();
+        var testimonials = await _testimonialService.GetAllAsync();
         return Ok(testimonials);
     }
     [HttpPost]
-    public IActionResult AddTestimonial(Testimonial testimonial)
+    public async Task<IActionResult> AddTestimonial(Testimonial testimonial)
     {
-        _testimonialService.TInsert(testimonial);
+        await _testimonialService.AddAsync(testimonial);
         return Ok();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteTestimonial(int id)
+    public async Task<IActionResult> DeleteTestimonial(int id)
     {
-        var testimonial = _testimonialService.TGetById(id);
-        _testimonialService.TDelete(testimonial);
+        var testimonial = await _testimonialService.GetByIdAsync(id);
+        await _testimonialService.DeleteAsync(testimonial);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateTestimonial(Testimonial testimonial)
+    public async Task<IActionResult> UpdateTestimonial(Testimonial testimonial)
     {
-        _testimonialService.TUpdate(testimonial);
+        await _testimonialService.UpdateAsync(testimonial);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetTestimonial(int id)
+    public async Task<IActionResult> GetTestimonial(int id)
     {
-        var values = _testimonialService.TGetById(id);
-        return Ok(values);
+        var value = await _testimonialService.GetByIdAsync(id);
+        return Ok(value);
     }
 }

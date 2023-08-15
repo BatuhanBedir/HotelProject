@@ -1,4 +1,5 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.BusinessLayer.Interfaces.Generic;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
@@ -6,35 +7,39 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class AboutManager : IAboutService
 {
-    private readonly IAboutDal _aboutDal;
+    private readonly IAboutRepository _aboutRepository;
 
-    public AboutManager(IAboutDal aboutDal)
+    public AboutManager(IAboutRepository aboutRepository)
     {
-        _aboutDal = aboutDal;
+        _aboutRepository = aboutRepository;
     }
 
-    public void TDelete(About t)
+    public async Task AddAsync(About t)
     {
-        _aboutDal.Delete(t);
+        await _aboutRepository.AddAsync(t);
+        await _aboutRepository.SaveChangesAsync();
     }
 
-    public About TGetById(int id)
+    public async Task DeleteAsync(About t)
     {
-        return _aboutDal.GetById(id);
+        await _aboutRepository.DeleteAsync(t);
+        await _aboutRepository.SaveChangesAsync();
+
     }
 
-    public List<About> TGetList()
+    public async Task<List<About>> GetAllAsync()
     {
-        return _aboutDal.GetList();
+       return await _aboutRepository.GetAllAsync();
     }
 
-    public void TInsert(About t)
+    public async Task<About> GetByIdAsync(int id)
     {
-        _aboutDal.Insert(t);
+        return await _aboutRepository.GetByIdAsync(id);
     }
 
-    public void TUpdate(About t)
+    public async Task UpdateAsync(About t)
     {
-        _aboutDal.Update(t);
+        await _aboutRepository.UpdateAsync(t); 
+        await _aboutRepository.SaveChangesAsync();
     }
 }

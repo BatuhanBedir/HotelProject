@@ -5,7 +5,7 @@ namespace HotelProject.BusinessLayer.Interfaces;
 
 public interface IBookingService : IGenericService<Booking>
 {
-    void TBookingStatusChange(int id,string status); 
-    int TGetBookingCount();
-    List<Booking> TLast6Bookings();
+    Task BookingStatusChangeAsync(int id,string status); 
+    Task<int> GetBookingCountAsync();
+    Task<List<Booking>> Last6BookingsAsync();
 }

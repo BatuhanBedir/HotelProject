@@ -1,39 +1,43 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
-using HotelProject.DataAccessLayer.Interfaces.Generic;
+using HotelProject.DataAccessLayer.EntityFramework;
+using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.BusinessLayer.Services;
 public class CategoryManager : ICategoryService
 {
-    private readonly ICategoryDal _categoryDal;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public CategoryManager(ICategoryDal categoryDal)
+    public CategoryManager(ICategoryRepository categoryRepository)
     {
-        _categoryDal = categoryDal;
+        _categoryRepository = categoryRepository;
     }
 
-    public void TDelete(Category t)
+    public async Task AddAsync(Category t)
     {
-        _categoryDal.Delete(t);
+        await _categoryRepository.AddAsync(t);
+        await _categoryRepository.SaveChangesAsync();
     }
 
-    public Category TGetById(int id)
+    public async Task DeleteAsync(Category t)
     {
-        return _categoryDal.GetById(id);
+        await _categoryRepository.DeleteAsync(t);
+        await _categoryRepository.SaveChangesAsync();
     }
 
-    public List<Category> TGetList()
+    public async Task<List<Category>> GetAllAsync()
     {
-        return _categoryDal.GetList();
+        return await _categoryRepository.GetAllAsync();
     }
 
-    public void TInsert(Category t)
+    public async Task<Category> GetByIdAsync(int id)
     {
-        _categoryDal.Insert(t);
+        return await _categoryRepository.GetByIdAsync(id);
     }
 
-    public void TUpdate(Category t)
+    public async Task UpdateAsync(Category t)
     {
-        _categoryDal.Update(t);
+        await _categoryRepository.UpdateAsync(t);
+        await _categoryRepository.SaveChangesAsync();
     }
 }

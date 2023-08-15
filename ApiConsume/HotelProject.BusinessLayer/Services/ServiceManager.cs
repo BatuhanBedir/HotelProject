@@ -1,4 +1,5 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
@@ -6,34 +7,38 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class ServiceManager : IServiceService
 {
-    private readonly IServiceDal _serviceDal;
+    private readonly IServiceRepository _serviceRepository;
 
-    public ServiceManager(IServiceDal serviceDal)
+    public ServiceManager(IServiceRepository serviceRepository)
     {
-        _serviceDal = serviceDal;
+        _serviceRepository = serviceRepository;
     }
-    public void TDelete(Service t)
+    public async Task AddAsync(Service t)
     {
-        _serviceDal.Delete(t);
-    }
-
-    public Service TGetById(int id)
-    {
-        return _serviceDal.GetById(id);
+        await _serviceRepository.AddAsync(t);
+        await _serviceRepository.SaveChangesAsync();
     }
 
-    public List<Service> TGetList()
+    public async Task DeleteAsync(Service t)
     {
-        return _serviceDal.GetList();   
+        await _serviceRepository.DeleteAsync(t);
+        await _serviceRepository.SaveChangesAsync();
+
     }
 
-    public void TInsert(Service t)
+    public async Task<List<Service>> GetAllAsync()
     {
-        _serviceDal.Insert(t);
+        return await _serviceRepository.GetAllAsync();
     }
 
-    public void TUpdate(Service t)
+    public async Task<Service> GetByIdAsync(int id)
     {
-        _serviceDal.Update(t);
+        return await _serviceRepository.GetByIdAsync(id);
+    }
+
+    public async Task UpdateAsync(Service t)
+    {
+        await _serviceRepository.UpdateAsync(t);
+        await _serviceRepository.SaveChangesAsync();
     }
 }

@@ -3,7 +3,7 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.Interfaces;
 
-public interface IContactDal : IGenericDal<Contact>
+public interface IStaffRepository : IGenericRepository<Staff>
 {
-    public int GetContactCount();
+    Task<List<Staff>> Last4StaffAsync();
 }

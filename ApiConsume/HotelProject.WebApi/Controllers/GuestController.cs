@@ -16,34 +16,34 @@ namespace HotelProject.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult RoomList()
+        public async Task<IActionResult> RoomList()
         {
-            var values = _guestService.TGetList();
+            var values =await _guestService.GetAllAsync();
             return Ok(values);
         }
         [HttpPost]
-        public IActionResult AddGuest(Guest guest)
+        public async Task<IActionResult> AddGuest(Guest guest)
         {
-            _guestService.TInsert(guest);
+            await _guestService.AddAsync(guest);
             return Ok();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteGuest(int id)
+        public async Task<IActionResult> DeleteGuest(int id)
         {
-            var values = _guestService.TGetById(id);
-            _guestService.TDelete(values);
+            var values = await _guestService.GetByIdAsync(id);
+            await _guestService.DeleteAsync(values);
             return Ok();
         }
         [HttpPut]
-        public IActionResult UpdateGuest(Guest guest)
+        public async Task<IActionResult> UpdateGuest(Guest guest)
         {
-            _guestService.TUpdate(guest);
+            await _guestService.UpdateAsync(guest);
             return Ok();
         }
         [HttpGet("{id}")]
-        public IActionResult GetGuest(int id)
+        public async Task<IActionResult> GetGuest(int id)
         {
-            var values = _guestService.TGetById(id);
+            var values = await _guestService.GetByIdAsync(id);
             return Ok(values);
         }
     }

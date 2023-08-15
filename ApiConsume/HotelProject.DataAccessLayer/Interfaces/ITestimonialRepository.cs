@@ -3,7 +3,6 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.Interfaces;
 
-public interface IStaffDal : IGenericDal<Staff>
+public interface ITestimonialRepository : IGenericRepository<Testimonial>
 {
-    List<Staff> Last4Staff();
 }

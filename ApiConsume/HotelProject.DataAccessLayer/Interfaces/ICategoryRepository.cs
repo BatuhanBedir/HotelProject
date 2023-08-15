@@ -3,8 +3,6 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.Interfaces;
 
-public interface IBookingDal : IGenericDal<Booking>
+public interface ICategoryRepository : IGenericRepository<Category>
 {
-    void BookingStatusChange(int id, string status);
-    List<Booking> Last6Booking();
 }

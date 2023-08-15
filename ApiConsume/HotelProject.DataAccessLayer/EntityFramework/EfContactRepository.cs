@@ -2,12 +2,14 @@
 using HotelProject.DataAccessLayer.EntityFramework.Generic;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelProject.DataAccessLayer.EntityFramework;
 
-public class EfWorkLocationDal : GenericRepository<WorkLocation>, IWorkLocationDal
+public class EfContactRepository : GenericRepository<Contact>, IContactRepository
 {
-    public EfWorkLocationDal(Context context) : base(context)
+    public EfContactRepository(Context context) : base(context)
     {
     }
+
 }

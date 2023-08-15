@@ -16,34 +16,38 @@ public class AboutController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult AboutList()
+    public async Task<IActionResult> AboutList()
     {
-        var abouts = _aboutService.TGetList();
+        var abouts = await _aboutService.GetAllAsync();
         return Ok(abouts);
     }
     [HttpPost]
-    public IActionResult AddAbout(About about)
+    public async Task<IActionResult> AddAbout(About about)
     {
-        _aboutService.TInsert(about);
+        if (!ModelState.IsValid)
+            return BadRequest();
+        await _aboutService.AddAsync(about);
         return Ok();
     }
     [HttpDelete]
-    public IActionResult DeleteAbout(int id)
+    public async Task<IActionResult> DeleteAbout(int id)
     {
-        var about = _aboutService.TGetById(id);
-        _aboutService.TDelete(about);
+        var about = await _aboutService.GetByIdAsync(id);
+        await _aboutService.DeleteAsync(about);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateAbout(About about)
+    public async Task<IActionResult> UpdateAbout(About about)
     {
-        _aboutService.TUpdate(about);
+        if (!ModelState.IsValid)
+            return BadRequest();
+        await _aboutService.UpdateAsync(about);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetAbout(int id)
+    public async Task<IActionResult> GetAbout(int id)
     {
-        var about = _aboutService.TGetById(id);
+        var about = await _aboutService.GetByIdAsync(id);
         return Ok(about);
     }
 }

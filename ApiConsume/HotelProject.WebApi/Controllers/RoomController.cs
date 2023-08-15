@@ -16,34 +16,34 @@ public class RoomController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult RoomList()
+    public async Task<IActionResult> RoomList()
     {
-        var rooms = _roomService.TGetList();
+        var rooms = await _roomService.GetAllAsync();
         return Ok(rooms);
     }
     [HttpPost]
-    public IActionResult AddRoom(Room room)
+    public async Task<IActionResult> AddRoom(Room room)
     {
-        _roomService.TInsert(room);
+        await _roomService.AddAsync(room);
         return Ok();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteRoom(int id)
+    public async Task<IActionResult> DeleteRoom(int id)
     {
-        var room =_roomService.TGetById(id);
-        _roomService.TDelete(room);
+        var room = await _roomService.GetByIdAsync(id);
+        await _roomService.DeleteAsync(room);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateRoom(Room room)
+    public async Task<IActionResult> UpdateRoom(Room room)
     {
-        _roomService.TUpdate(room);
+        await _roomService.UpdateAsync(room);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetRoom(int id)
+    public async Task<IActionResult> GetRoom(int id)
     {
-        var room = _roomService.TGetById(id);
+        var room = await _roomService.GetByIdAsync(id);
         return Ok(room);
     }
 }

@@ -3,6 +3,6 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.Interfaces;
 
-public interface ITestimonialDal : IGenericDal<Testimonial>
+public interface IAboutRepository : IGenericRepository<About>
 {
 }

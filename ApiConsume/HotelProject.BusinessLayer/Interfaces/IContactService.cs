@@ -5,5 +5,5 @@ namespace HotelProject.BusinessLayer.Interfaces;
 
 public interface IContactService : IGenericService<Contact>
 {
-    public int TGetContactCount();
+    public Task<int> GetContactCountAsync();
 }

@@ -5,9 +5,9 @@ using HotelProject.EntityLayer.Concrete;
 
 namespace HotelProject.DataAccessLayer.EntityFramework;
 
-public class EfSubscribeDal : GenericRepository<Subscribe>, ISubscribeDal
+public class EfWorkLocationRepository : GenericRepository<WorkLocation>, IWorkLocationRepository
 {
-    public EfSubscribeDal(Context context) : base(context)
+    public EfWorkLocationRepository(Context context) : base(context)
     {
     }
 }

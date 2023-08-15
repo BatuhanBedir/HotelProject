@@ -8,9 +8,9 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class AppUserManager : IAppUserService
 {
-    private readonly IAppUserDal _appUserDal;
+    private readonly IAppUserRepository _appUserDal;
 
-    public AppUserManager(IAppUserDal appUserDal)
+    public AppUserManager(IAppUserRepository appUserDal)
     {
         _appUserDal = appUserDal;
     }

@@ -1,4 +1,5 @@
 ﻿using HotelProject.BusinessLayer.Interfaces;
+using HotelProject.DataAccessLayer.EntityFramework;
 using HotelProject.DataAccessLayer.Interfaces;
 using HotelProject.EntityLayer.Concrete;
 
@@ -6,45 +7,49 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class StaffManager : IStaffService
 {
-    private readonly IStaffDal _staffDal;
+    private readonly IStaffRepository _staffRepository;
 
-    public StaffManager(IStaffDal staffDal)
+    public StaffManager(IStaffRepository staffRepository)
     {
-        _staffDal = staffDal;
+        _staffRepository = staffRepository;
+    }
+    public async Task AddAsync(Staff t)
+    {
+        await _staffRepository.AddAsync(t);
+        await _staffRepository.SaveChangesAsync();
     }
 
-    public void TDelete(Staff t)
+    public async Task DeleteAsync(Staff t)
     {
-        _staffDal.Delete(t);
+        await _staffRepository.DeleteAsync(t);
+        await _staffRepository.SaveChangesAsync();
+
     }
 
-    public Staff TGetById(int id)
+    public async Task<List<Staff>> GetAllAsync()
     {
-        return _staffDal.GetById(id);
+        return await _staffRepository.GetAllAsync();
     }
 
-    public List<Staff> TGetList()
+    public async Task<Staff> GetByIdAsync(int id)
     {
-        return _staffDal.GetList();
+        return await _staffRepository.GetByIdAsync(id);
     }
 
-    public int TGetStaffCount()
+    public async Task<int> GetStaffCountAsync()
     {
-        return _staffDal.GetList().Count();
+        var staffs =await _staffRepository.GetAllAsync();
+        return staffs.Count();
     }
 
-    public void TInsert(Staff t)
+    public async Task<List<Staff>> Last4StaffAsync()
     {
-        _staffDal.Insert(t);
+        return await _staffRepository.Last4StaffAsync();
     }
 
-    public List<Staff> TLast4Staff()
+    public async Task UpdateAsync(Staff t)
     {
-        return _staffDal.Last4Staff();
-    }
-
-    public void TUpdate(Staff t)
-    {
-        _staffDal.Update(t);
+        await _staffRepository.UpdateAsync(t);
+        await _staffRepository.SaveChangesAsync();
     }
 }

@@ -16,34 +16,34 @@ public class ServiceController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult ServiceList()
+    public async Task<IActionResult> ServiceList()
     {
-        var services = _serviceService.TGetList();
+        var services = await _serviceService.GetAllAsync();
         return Ok(services);
     }
     [HttpPost]
-    public IActionResult AddService(Service service)
+    public async Task<IActionResult> AddService(Service service)
     {
-        _serviceService.TInsert(service);
+        await _serviceService.AddAsync(service);
         return Ok();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteService(int id)
+    public async Task<IActionResult> DeleteService(int id)
     {
-        var service = _serviceService.TGetById(id);
-        _serviceService.TDelete(service);
+        var service = await _serviceService.GetByIdAsync(id);
+        await _serviceService.DeleteAsync(service);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateService(Service service)
+    public async Task<IActionResult> UpdateService(Service service)
     {
-        _serviceService.TUpdate(service);
+        await _serviceService.UpdateAsync(service);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetService(int id)
+    public async Task<IActionResult> GetService(int id)
     {
-        var service = _serviceService.TGetById(id);
+        var service =await _serviceService.GetByIdAsync(id);
         return Ok(service);
     }
 }

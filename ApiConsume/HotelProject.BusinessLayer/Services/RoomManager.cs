@@ -6,54 +6,54 @@ namespace HotelProject.BusinessLayer.Services;
 
 public class RoomManager : IRoomService
 {
-    private readonly IRoomDal _roomDal;
-    private readonly IAboutDal _aboutDal;
+    private readonly IRoomRepository _roomRepository;
+    private readonly IAboutRepository _aboutRepository;
 
-    public RoomManager(IRoomDal roomDal, IAboutDal aboutDal)
+    public RoomManager(IRoomRepository roomRepository, IAboutRepository aboutRepository)
     {
-        _roomDal = roomDal;
-        _aboutDal = aboutDal;
+        _roomRepository = roomRepository;
+        _aboutRepository = aboutRepository;
+    }
+    public async Task<List<Room>> GetAllAsync()
+    {
+        return await _roomRepository.GetAllAsync();
     }
 
-    public void TDelete(Room t)
+    public async Task<Room> GetByIdAsync(int id)
     {
-        _roomDal.Delete(t);
-        var a = _aboutDal.GetList();
+        return await _roomRepository.GetByIdAsync(id);
+    }
+    public async Task DeleteAsync(Room t)
+    {
+        await _roomRepository.DeleteAsync(t);
+        var a = await _aboutRepository.GetAllAsync();
         foreach (var item in a)
         {
             item.RoomCount--;
-            _aboutDal.Update(item);
+            await _aboutRepository.UpdateAsync(item);
         }
+        await _roomRepository.SaveChangesAsync();
     }
-
-    public Room TGetById(int id)
+    public async Task AddAsync(Room t)
     {
-        return _roomDal.GetById(id);
-    }
-
-    public List<Room> TGetList()
-    {
-        return _roomDal.GetList();
-    }
-
-    public void TInsert(Room t)
-    {
-        _roomDal.Insert(t);
-        List<About>? a = _aboutDal.GetList();
+        await _roomRepository.AddAsync(t);
+        List<About>? a =await _aboutRepository.GetAllAsync();
         foreach (var item in a)
         {
             item.RoomCount++;
-            _aboutDal.Update(item);
+            await _aboutRepository.UpdateAsync(item);
         }
+        await _roomRepository.SaveChangesAsync();
+    }
+    public async Task<int> RoomCountAsync()
+    {
+        var rooms = await _roomRepository.GetAllAsync();
+        return rooms.Count();
     }
 
-    public int TRoomCount()
+    public async Task UpdateAsync(Room t)
     {
-        return _roomDal.GetList().Count();
-    }
-
-    public void TUpdate(Room t)
-    {
-        _roomDal.Update(t);
+        await _roomRepository.UpdateAsync(t);
+        await _roomRepository.SaveChangesAsync();
     }
 }

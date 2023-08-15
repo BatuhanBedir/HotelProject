@@ -16,39 +16,39 @@ public class StaffController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult StaffList()
+    public async Task<IActionResult> StaffList()
     {
-        var staffs = _staffService.TGetList();
+        var staffs = await _staffService.GetAllAsync();
         return Ok(staffs);
     }
     [HttpPost]
-    public IActionResult AddStaff(Staff staff)
+    public async Task<IActionResult> AddStaff(Staff staff)
     {
-        _staffService.TInsert(staff);
+        await _staffService.AddAsync(staff);
         return Ok();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteStaff(int id)
+    public async Task<IActionResult> DeleteStaff(int id)
     {
-        var staff = _staffService.TGetById(id);
-        _staffService.TDelete(staff);
+        var staff = await _staffService.GetByIdAsync(id);
+        await _staffService.DeleteAsync(staff);
         return Ok();
     }
     [HttpPut]
-    public IActionResult UpdateStaff(Staff staff)
+    public async Task<IActionResult> UpdateStaff(Staff staff)
     {
-        _staffService.TUpdate(staff);
+        await _staffService.UpdateAsync(staff);
         return Ok();
     }
     [HttpGet("{id}")]
-    public IActionResult GetStaff(int id)
+    public async Task<IActionResult> GetStaff(int id)
     {
-        var values = _staffService.TGetById(id);
+        var values = await _staffService.GetByIdAsync(id);
         return Ok(values);
     }
     [HttpGet("[action]")]
-    public IActionResult Last4Staff()
+    public async Task<IActionResult> Last4Staff()
     {
-        return Ok(_staffService.TLast4Staff());
+        return Ok(await _staffService.Last4StaffAsync());
     }
 }
